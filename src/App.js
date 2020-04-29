@@ -3,6 +3,7 @@ import "./App.css";
 import { Grid } from "semantic-ui-react";
 import "./components/AddTodo/AddTodo";
 import AddTodo from "./components/AddTodo/AddTodo";
+import Todos from './components/Todos'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Grid.Row columns={2}>
           <Grid.Column>
           <h2 className="header__app subtitle">TO DO</h2>
+          <Todos />
           </Grid.Column>
           <Grid.Column>
           <h2 className="header__app subtitle">DONE</h2>
