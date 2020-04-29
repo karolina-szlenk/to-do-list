@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useDispatch } from "react-redux";
-import { Button, Input } from 'semantic-ui-react';
+import { Input } from 'semantic-ui-react';
 import { ACTION_ADD_TODO } from '../../modules/actions'
 import './AddTodo.css'
 
@@ -23,8 +23,7 @@ function AddTodo() {
 
   return (
     <form className='addTodo__form' onSubmit={handleSubmit}>
-      <Input placeholder='Add task' value={inputValue} onChange={handleChange}/>
-      <Button type='submit' icon='plus'></Button>
+      <Input action={{ icon: 'plus' }} placeholder='Enter new task' value={inputValue} onChange={handleChange}/>
     </form>
   );
 }

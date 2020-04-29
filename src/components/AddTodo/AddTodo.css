@@ -1,6 +1,6 @@
 .addTodo__form{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     margin: 0 auto;
     text-align: center;
     width: 50%;
