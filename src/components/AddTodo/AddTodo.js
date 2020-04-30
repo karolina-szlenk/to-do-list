@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import { useDispatch } from "react-redux";
-import { Input } from 'semantic-ui-react';
+import React, {useState} from 'react'
+import { useDispatch } from "react-redux"
+import { Input } from 'semantic-ui-react'
 import { ACTION_ADD_TODO } from '../../modules/actions'
 import './AddTodo.css'
 

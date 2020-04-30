@@ -24,6 +24,10 @@ let reducer = (state = INITIAL_STATE, action) => {
       return state = {
         ...state,
         todos: todosCopy
+      };
+    case TODOS_ACTION_TYPES.REMOVE_TODO:
+      return state = {
+        todos: state.todos.filter(todo => todo.id !== action.id)
       }
     default:
       return state;
