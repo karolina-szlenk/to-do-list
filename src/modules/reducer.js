@@ -16,6 +16,14 @@ let reducer = (state = INITIAL_STATE, action) => {
             completed: false, 
           },
         ],
+      };
+    case TODOS_ACTION_TYPES.TOGGLE_TODO:
+      const todosCopy = [...state.todos];
+      todosCopy.map(todo =>
+        (todo.id === action.id) ? todo.completed = !todo.completed : null)
+      return state = {
+        ...state,
+        todos: todosCopy
       }
     default:
       return state;

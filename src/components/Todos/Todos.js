@@ -1,20 +1,56 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Segment, Button } from 'semantic-ui-react'
-import { selectTodos } from '../../modules/selector';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Segment, Button, Grid , Icon } from "semantic-ui-react";
+import { ACTION_TOGGLE_TODO } from "../../modules/actions";
+import {
+  selectTodosCompleted,
+  selectTodosIncompleted,
+} from "../../modules/selector";
+import './Todos.css'
 
 function Todos() {
-  const todos = useSelector(state => selectTodos(state));
 
-  const renderTodos = todos.map((todo) => (
-    <Segment key={todo.id}>
-      {todo.completed ? <Button icon='circle'></Button> : <Button icon='circle outline'></Button>}
-      {todo.title}
-      <Button icon='close'></Button>
-    </Segment>
-  ));
+  const todosCompleted = useSelector((state) => selectTodosCompleted(state));
+  const todosIncompleted = useSelector((state) =>
+    selectTodosIncompleted(state)
+  );
 
-  return <div>{renderTodos}</div>;
+  const dispatch = useDispatch();
+  const actionToggleTodo = (id) => dispatch(ACTION_TOGGLE_TODO(id));
+
+  const handleClick = (element) => {
+    actionToggleTodo(element);
+  };
+
+  const renderTodos = (todoList) =>
+    todoList.map((todo) => (
+      <Segment key={todo.id} onClick={() => handleClick(todo.id)} className="todos__segment">
+        {todo.completed ? (
+          <Icon name="check circle outline" size="large"></Icon>
+        ) : (
+            <Icon name="circle outline" size="large"></Icon>
+          )}
+        {todo.title}
+        <Button icon="trash" onClick={() => console.log("deleted")}></Button>
+      </Segment>
+    ));
+
+  return (
+    <div>
+      <Grid stackable dividied="vertically">
+        <Grid.Row columns={2}>
+          <Grid.Column>
+            <h2 className="header__app subtitle">TO DO</h2>
+            {renderTodos(todosIncompleted)}
+          </Grid.Column>
+          <Grid.Column>
+            <h2 className="header__app subtitle">DONE</h2>
+            {renderTodos(todosCompleted)}
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </div>
+  );
 }
 
 export default Todos;

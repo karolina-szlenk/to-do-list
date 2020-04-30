@@ -1,0 +1,5 @@
+.todos__segment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

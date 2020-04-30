@@ -18,17 +18,8 @@ function App() {
             <AddTodo />
           </Grid.Column>
         </Grid.Row>
-
-        <Grid.Row columns={2}>
-          <Grid.Column>
-          <h2 className='header__app subtitle'>TO DO</h2>
-          <Todos />
-          </Grid.Column>
-          <Grid.Column>
-          <h2 className='header__app subtitle'>DONE</h2>
-          </Grid.Column>
-        </Grid.Row>
       </Grid>
+      <Todos />
     </div>
   );
 }
