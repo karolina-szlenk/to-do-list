@@ -3,6 +3,7 @@ import './App.css';
 import { Grid, Icon } from 'semantic-ui-react';
 import './components/AddTodo/AddTodo';
 import AddTodo from './components/AddTodo/AddTodo';
+import SearchTodo from './components/SearchTodo/SearchTodo'
 import Todos from './components/Todos/Todos'
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
               <Icon className='header__icon' name='pencil' size='big'></Icon>
             </div>
             <AddTodo />
+            <br></br>
+            <SearchTodo/>
           </Grid.Column>
         </Grid.Row>
       </Grid>
