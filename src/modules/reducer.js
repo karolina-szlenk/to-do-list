@@ -2,15 +2,14 @@ import { TODOS_ACTION_TYPES } from "./actions";
 
 const INITIAL_STATE = {
   todos: [],
-  showAll: true,
-  showTodo: false,
-  showDone: false,
+  searchTodoByName: ""
 };
 
-let reducer = (state = INITIAL_STATE, action) => {
+export const todos = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case TODOS_ACTION_TYPES.ADD_TODO:
       return (state = {
+        ...state,
         todos: [
           ...state.todos,
           {
@@ -31,32 +30,34 @@ let reducer = (state = INITIAL_STATE, action) => {
       });
     case TODOS_ACTION_TYPES.REMOVE_TODO:
       return (state = {
+        ...state,
         todos: state.todos.filter((todo) => todo.id !== action.id),
       });
-    case TODOS_ACTION_TYPES.SHOW_ALL:
+    case TODOS_ACTION_TYPES.SEARCH_TODO:
       return (state = {
         ...state,
-        showAll: true,
-        showTodo: false,
-        showDone: false,
+        searchTodoByName: action.value,
       });
-    case TODOS_ACTION_TYPES.SHOW_TODO:
-      return (state = {
-        ...state,
-        showAll: false,
-        showTodo: true,
-        showDone: false,
-      });
-    case TODOS_ACTION_TYPES.SHOW_DONE:
-      return (state = {
-        ...state,
-        showAll: false,
-        showTodo: false,
-        showDone: true,
-      });
-    default:
+    default: {
       return state;
+    }
   }
 };
 
-export default reducer;
+export const visibilityFilter = (
+  state = { activeFilter: TODOS_ACTION_TYPES.SHOW_ALL },
+  action
+) => {
+  switch (action.type) {
+    case TODOS_ACTION_TYPES.SET_VISIBILITY_FILTER: {
+      return {
+        activeFilter: action.filter,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+

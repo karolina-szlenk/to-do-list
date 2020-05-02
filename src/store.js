@@ -1,10 +1,10 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import reducer from "./modules/reducer";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
+import { todos, visibilityFilter  } from "./modules/reducer";
 
 export default function configureStore(initialState) {
   return createStore(
-    reducer,
+    combineReducers({ todos, visibilityFilter }),
     initialState,
     compose(
       applyMiddleware(thunk),
