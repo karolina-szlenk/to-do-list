@@ -15,7 +15,7 @@ input {
 
 .header {
   align-items: center;
-  background-color: #7c00cd !important;
+  background-image: linear-gradient(to bottom right, #6435c9, #e03998);
   box-shadow: 1px 1px 10px 1px #b8b8b8;
   color: white !important;
   display: flex;
