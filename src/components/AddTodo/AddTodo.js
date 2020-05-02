@@ -24,7 +24,7 @@ function AddTodo() {
   return (
     <form className="addTodo__form" onSubmit={handleSubmit}>
       <Input
-        action={{ icon: "plus" }}
+        action={{ icon: "plus" , color: 'yellow' }}
         placeholder="Enter new task..."
         value={inputValue}
         onChange={handleChange}

@@ -4,18 +4,28 @@
 
 body {
   margin: 0;
+  font-family: 'Roboto', sans-serif !important;
   font-size: 16px;
+  background-color: #F0F0F0 !important;
+}
+
+input {
+  font-family: 'Roboto', sans-serif !important;
 }
 
 .header {
+  align-items: center;
+  background-color: #7c00cd !important;
+  box-shadow: 1px 1px 10px 1px #b8b8b8;
+  color: white !important;
   display: flex;
   justify-content: center;
-  align-items: center
+  z-index: 3;
 }
 
 .app_wrapper {
-  width: 90%;
   margin: 0 auto;
+  width: 90%;
   text-align: center;
 }
 

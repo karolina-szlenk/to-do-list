@@ -35,12 +35,12 @@ function Todos() {
         className="todos__segment"
       >
         {todo.completed ? (
-          <Icon name="check circle outline" size="large"></Icon>
+          <Icon name="check circle outline" size="large" color="pink"></Icon>
         ) : (
-          <Icon name="circle outline" size="large"></Icon>
+          <Icon name="circle outline" size="large" color="violet"></Icon>
         )}
         {todo.title}
-        <Button icon="trash" onClick={() => handleRemove(todo.id)}></Button>
+        <Button icon="trash" color="grey" onClick={() => handleRemove(todo.id)}></Button>
       </Segment>
     ));
 

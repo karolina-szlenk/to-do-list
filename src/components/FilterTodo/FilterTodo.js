@@ -23,11 +23,12 @@ function FilterTodo() {
   const actionSearchTodo = (inputValue) =>
     dispatch(ACTION_SEARCH_TODO(inputValue));
 
-  const buttons = [{title: "Show All", icon: "tasks" }, {title: "Show Todo", icon: "circle outline" }, {title: "Show Done", icon: "check circle outline" }]
+  const buttons = [{title: "Show All", icon: "tasks", color: "yellow" }, {title: "Show Todo", icon: "circle outline", color: "violet" }, {title: "Show Done", icon: "check circle outline", color: "pink" }]
 
   const renderButtons = filters.map((filter, i) => (
     <Button
       animated="vertical"
+      color={buttons[i].color}
       onClick={() => actionSetVisibilityFilter(filter)}
       key={`filter-${i}`}
     >
@@ -42,7 +43,7 @@ function FilterTodo() {
     <div>
       <form className="addTodo__form" onSubmit={handleSubmit}>
         <Input
-          action={{ icon: "search" }}
+          action={{ icon: "search", color: 'yellow' }}
           placeholder="Search task..."
           value={inputValue}
           onChange={handleChange}
