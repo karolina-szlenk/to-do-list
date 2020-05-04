@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Segment, Button, Icon } from "semantic-ui-react";
+import { Segment, Button, Icon, Message, Dimmer, Loader, Image } from "semantic-ui-react";
 import { ACTION_TOGGLE_TODO, ACTION_REMOVE_TODO, ACTION_INIT_TODOS_FROM_BASE, ACTION_REMOVE_TODO_FROM_BASE} from "../../modules/actions";
 import {
   selectVisibleTodos,
   selectSearchTodo,
   selectSearchTodoByName, 
+  selectTodosLoading,
+  selectTodosError
 } from "../../modules/selector";
 import "./Todos.css";
 
@@ -15,15 +17,18 @@ function Todos() {
   const searchTodoByName = useSelector((state) =>
     selectSearchTodoByName(state)
   );
+  const todosLoading = useSelector((state) => selectTodosLoading(state));
+  const todosError = useSelector((state) => selectTodosError(state));
   const dispatch = useDispatch();
   const actionToggleTodo = (key) => dispatch(ACTION_TOGGLE_TODO(key));
   const actionRemoveTodo = (key) => dispatch(ACTION_REMOVE_TODO(key));
   const actionInitTodos = () => dispatch(ACTION_INIT_TODOS_FROM_BASE());
-  const actionRemoveTodoFromBase = (key) => dispatch(ACTION_REMOVE_TODO_FROM_BASE(key));
+  const actionRemoveTodoFromBase = (key) =>
+    dispatch(ACTION_REMOVE_TODO_FROM_BASE(key));
 
   useEffect(() => {
-    actionInitTodos()
-  }, [])
+    actionInitTodos();
+  }, []);
 
   const handleClick = (element) => {
     actionToggleTodo(element);
@@ -47,14 +52,33 @@ function Todos() {
           <Icon name="circle outline" size="large" color="violet"></Icon>
         )}
         {todo.title}
-        <Button icon="trash" color="grey" onClick={() => handleRemove(todo.key)}></Button>
+        <Button
+          icon="trash"
+          color="grey"
+          onClick={() => handleRemove(todo.key)}
+        ></Button>
       </Segment>
     ));
 
   return (
     <div>
       <h2 className="header__app subtitle">MY TASKS</h2>
-      {searchTodo ? renderTodos(searchTodoByName) : renderTodos(todosVisible)}
+      {!todosError && !todosLoading && searchTodo
+        ? renderTodos(searchTodoByName)
+        : renderTodos(todosVisible)}
+
+      {todosError && (
+        <Message negative header='Błąd pobierania danych!'/>
+      )}
+
+      {todosLoading && (
+        <Segment>
+          <Dimmer active inverted>
+            <Loader inverted content="Ładowanie..." />
+          </Dimmer>
+          <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+        </Segment>
+      )}
     </div>
   );
 }

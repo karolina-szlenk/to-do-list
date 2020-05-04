@@ -21,3 +21,6 @@ export const selectSearchTodo = (state) => state.todos.searchTodoByName;
 export const selectSearchTodoByName = (state) => state.todos.todos.filter(todo => 
   todo.title.toLowerCase().includes(state.todos.searchTodoByName.toLowerCase()))
 
+export const selectTodosLoading = (state) => state.todos.isLoading;
+
+export const selectTodosError = (state) => state.todos.isError;

@@ -13,6 +13,8 @@ export const TODOS_ACTION_TYPES = {
   INIT_TODOS_FROM_BASE: "INIT_TODOS_FROM_BASE",
   ADD_TODO_TO_BASE: "ADD_TODO_TO_BASE",
   REMOVE_TODO_FROM_BASE: "REMOVE_TODO_FROM_BASE",
+  GET_DATA_LOADING: "GET_DATA_LOADING",
+  GET_DATA_ERROR: "GET_DATA_ERROR",
 };
 
 const API_URL = "https://jfdd14-ks-homework7.firebaseio.com/";
@@ -71,11 +73,13 @@ export const ACTION_INIT_TODOS_SUCCESS = (todos) => {
 
 export const ACTION_INIT_TODOS_FROM_BASE = () => {
   return (dispatch) => {
+    dispatch(ACTION_GET_DATA_LOADING());
     return fetch(API_URL + jsonType)
       .then((response) => response.json())
       .then((json) => {
         return dispatch(ACTION_INIT_TODOS_SUCCESS(mapObjectToArray(json)));
-      });
+      })
+      .catch((e) => dispatch(ACTION_GET_DATA_ERROR()));
   };
 };
 
@@ -101,3 +105,14 @@ export const ACTION_REMOVE_TODO_FROM_BASE = (key) => {
   };
 };
 
+export const ACTION_GET_DATA_LOADING = () => {
+  return {
+    type: TODOS_ACTION_TYPES.GET_DATA_LOADING,
+  };
+};
+
+export const ACTION_GET_DATA_ERROR = () => {
+  return {
+    type: TODOS_ACTION_TYPES.GET_DATA_ERROR,
+  };
+};

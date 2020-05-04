@@ -13,7 +13,7 @@ input {
   font-family: 'Roboto', sans-serif !important;
 }
 
-.header {
+.header__container {
   align-items: center;
   background-image: linear-gradient(to bottom right, #6435c9, #e03998);
   box-shadow: 1px 1px 10px 1px #b8b8b8;

@@ -8,7 +8,7 @@ import "./App.css";
 function App() {
   return (
     <React.Fragment>
-      <div className="header">
+      <div className="header__container">
         <h2 className="header__app title">TO DO LIST...</h2>
         <Icon className="header__icon" name="pencil" size="big"></Icon>
       </div>
