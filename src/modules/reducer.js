@@ -38,6 +38,11 @@ export const todos = (state = INITIAL_STATE, action) => {
         ...state,
         searchTodoByName: action.value,
       });
+    case TODOS_ACTION_TYPES.INIT_TODOS_SUCCESS:
+      return (state = {
+        ...state,
+        todos: action.value
+      })
     default: {
       return state;
     }

@@ -1,3 +1,5 @@
+import mapObjectToArray from "../helpers";
+
 export const TODOS_ACTION_TYPES = {
   ADD_TODO: "ADD_TODO",
   TOGGLE_TODO: "TOGGLE_TODO",
@@ -7,7 +9,11 @@ export const TODOS_ACTION_TYPES = {
   SHOW_DONE: "SHOW_DONE",
   SET_VISIBILITY_FILTER: "SET_VISIBILITY_FILTER",
   SEARCH_TODO: "SEARCH_TODO",
+  INIT_TODOS_SUCCESS: "INIT_TODOS_SUCCESS",
+  INIT_TODOS_FROM_BASE: "INIT_TODOS_FROM_BASE",
 };
+
+const API_URL = "https://jfdd14-ks-homework7.firebaseio.com/.json";
 
 export const filters = [
   TODOS_ACTION_TYPES.SHOW_ALL,
@@ -50,5 +56,22 @@ export const ACTION_SEARCH_TODO = (inputValue) => {
   return {
     type: TODOS_ACTION_TYPES.SEARCH_TODO,
     value: inputValue,
+  };
+};
+
+export const ACTION_INIT_TODOS_SUCCESS = (todos) => {
+  return {
+    type: TODOS_ACTION_TYPES.INIT_TODOS_SUCCESS,
+    value: todos,
+  };
+};
+
+export const ACTION_INIT_TODOS_FROM_BASE = () => {
+  return (dispatch) => {
+    return fetch(API_URL)
+      .then((response) => response.json())
+      .then((json) => {
+        return dispatch(ACTION_INIT_TODOS_SUCCESS(mapObjectToArray(json)));
+      });
   };
 };

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Segment, Button, Icon } from "semantic-ui-react";
-import { ACTION_TOGGLE_TODO, ACTION_REMOVE_TODO } from "../../modules/actions";
+import { ACTION_TOGGLE_TODO, ACTION_REMOVE_TODO, ACTION_INIT_TODOS_FROM_BASE } from "../../modules/actions";
 import {
   selectVisibleTodos,
   selectSearchTodo,
@@ -18,6 +18,11 @@ function Todos() {
   const dispatch = useDispatch();
   const actionToggleTodo = (id) => dispatch(ACTION_TOGGLE_TODO(id));
   const actionRemoveTodo = (id) => dispatch(ACTION_REMOVE_TODO(id));
+  const actionInitTodos = () => dispatch(ACTION_INIT_TODOS_FROM_BASE());
+
+  useEffect(() => {
+    actionInitTodos()
+  }, [])
 
   const handleClick = (element) => {
     actionToggleTodo(element);
