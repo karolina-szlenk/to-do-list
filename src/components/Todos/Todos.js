@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Segment, Button, Icon } from "semantic-ui-react";
-import { ACTION_TOGGLE_TODO, ACTION_REMOVE_TODO, ACTION_INIT_TODOS_FROM_BASE } from "../../modules/actions";
+import { ACTION_TOGGLE_TODO, ACTION_REMOVE_TODO, ACTION_INIT_TODOS_FROM_BASE, ACTION_REMOVE_TODO_FROM_BASE} from "../../modules/actions";
 import {
   selectVisibleTodos,
   selectSearchTodo,
@@ -16,9 +16,10 @@ function Todos() {
     selectSearchTodoByName(state)
   );
   const dispatch = useDispatch();
-  const actionToggleTodo = (id) => dispatch(ACTION_TOGGLE_TODO(id));
-  const actionRemoveTodo = (id) => dispatch(ACTION_REMOVE_TODO(id));
+  const actionToggleTodo = (key) => dispatch(ACTION_TOGGLE_TODO(key));
+  const actionRemoveTodo = (key) => dispatch(ACTION_REMOVE_TODO(key));
   const actionInitTodos = () => dispatch(ACTION_INIT_TODOS_FROM_BASE());
+  const actionRemoveTodoFromBase = (key) => dispatch(ACTION_REMOVE_TODO_FROM_BASE(key));
 
   useEffect(() => {
     actionInitTodos()
@@ -30,13 +31,14 @@ function Todos() {
 
   const handleRemove = (element) => {
     actionRemoveTodo(element);
+    actionRemoveTodoFromBase(element);
   };
 
   const renderTodos = (todoList) =>
     todoList.map((todo) => (
       <Segment
         key={todo.id}
-        onClick={() => handleClick(todo.id)}
+        onClick={() => handleClick(todo.key)}
         className="todos__segment"
       >
         {todo.completed ? (
@@ -45,7 +47,7 @@ function Todos() {
           <Icon name="circle outline" size="large" color="violet"></Icon>
         )}
         {todo.title}
-        <Button icon="trash" color="grey" onClick={() => handleRemove(todo.id)}></Button>
+        <Button icon="trash" color="grey" onClick={() => handleRemove(todo.key)}></Button>
       </Segment>
     ));
 

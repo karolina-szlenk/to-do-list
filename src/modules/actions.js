@@ -12,9 +12,11 @@ export const TODOS_ACTION_TYPES = {
   INIT_TODOS_SUCCESS: "INIT_TODOS_SUCCESS",
   INIT_TODOS_FROM_BASE: "INIT_TODOS_FROM_BASE",
   ADD_TODO_TO_BASE: "ADD_TODO_TO_BASE",
+  REMOVE_TODO_FROM_BASE: "REMOVE_TODO_FROM_BASE",
 };
 
-const API_URL = "https://jfdd14-ks-homework7.firebaseio.com/.json";
+const API_URL = "https://jfdd14-ks-homework7.firebaseio.com/";
+const jsonType = ".json";
 
 export const filters = [
   TODOS_ACTION_TYPES.SHOW_ALL,
@@ -32,17 +34,17 @@ export const ACTION_ADD_TODO = (inputValue) => {
   };
 };
 
-export const ACTION_TOGGLE_TODO = (id) => {
+export const ACTION_TOGGLE_TODO = (key) => {
   return {
     type: TODOS_ACTION_TYPES.TOGGLE_TODO,
-    id: id,
+    key: key,
   };
 };
 
-export const ACTION_REMOVE_TODO = (id) => {
+export const ACTION_REMOVE_TODO = (key) => {
   return {
     type: TODOS_ACTION_TYPES.REMOVE_TODO,
-    id: id,
+    key: key,
   };
 };
 
@@ -69,7 +71,7 @@ export const ACTION_INIT_TODOS_SUCCESS = (todos) => {
 
 export const ACTION_INIT_TODOS_FROM_BASE = () => {
   return (dispatch) => {
-    return fetch(API_URL)
+    return fetch(API_URL + jsonType)
       .then((response) => response.json())
       .then((json) => {
         return dispatch(ACTION_INIT_TODOS_SUCCESS(mapObjectToArray(json)));
@@ -84,9 +86,18 @@ export const ACTION_ADD_TODO_TO_BASE = (inputValue) => {
       title: inputValue,
       completed: false,
     };
-    fetch(API_URL, {
+    fetch(API_URL + jsonType, {
       method: "POST",
       body: JSON.stringify(body),
     });
   };
 };
+
+export const ACTION_REMOVE_TODO_FROM_BASE = (key) => {
+  return (dispatch) => {
+    fetch(API_URL + key + jsonType, {
+      method: "DELETE",
+    });
+  };
+};
+
