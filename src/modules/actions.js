@@ -11,6 +11,7 @@ export const TODOS_ACTION_TYPES = {
   SEARCH_TODO: "SEARCH_TODO",
   INIT_TODOS_SUCCESS: "INIT_TODOS_SUCCESS",
   INIT_TODOS_FROM_BASE: "INIT_TODOS_FROM_BASE",
+  ADD_TODO_TO_BASE: "ADD_TODO_TO_BASE",
 };
 
 const API_URL = "https://jfdd14-ks-homework7.firebaseio.com/.json";
@@ -73,5 +74,19 @@ export const ACTION_INIT_TODOS_FROM_BASE = () => {
       .then((json) => {
         return dispatch(ACTION_INIT_TODOS_SUCCESS(mapObjectToArray(json)));
       });
+  };
+};
+
+export const ACTION_ADD_TODO_TO_BASE = (inputValue) => {
+  return (dispatch) => {
+    const body = {
+      id: Date.now(),
+      title: inputValue,
+      completed: false,
+    };
+    fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
   };
 };
