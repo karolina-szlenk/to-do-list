@@ -24,7 +24,7 @@ export const todos = (state = INITIAL_STATE, action) => {
     case TODOS_ACTION_TYPES.TOGGLE_TODO:
       const todosCopy = [...state.todos];
       todosCopy.map((todo) =>
-        todo.key === action.key ? (todo.completed = !todo.completed) : null
+        todo.key === action.todo.key ? (todo.completed = !todo.completed) : null
       );
       return (state = {
         ...state,
@@ -33,7 +33,7 @@ export const todos = (state = INITIAL_STATE, action) => {
     case TODOS_ACTION_TYPES.REMOVE_TODO:
       return (state = {
         ...state,
-        todos: state.todos.filter((todo) => todo.key !== action.key),
+        todos: state.todos.filter((todo) => todo.key !== action.todo.key),
       });
     case TODOS_ACTION_TYPES.SEARCH_TODO:
       return (state = {

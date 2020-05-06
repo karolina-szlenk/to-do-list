@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Segment, Button, Icon, Message, Dimmer, Loader, Image } from "semantic-ui-react";
-import { ACTION_TOGGLE_TODO, ACTION_REMOVE_TODO, ACTION_INIT_TODOS_FROM_BASE, ACTION_REMOVE_TODO_FROM_BASE} from "../../modules/actions";
+import { ACTION_TOGGLE_TODO, ACTION_REMOVE_TODO, ACTION_INIT_TODOS_FROM_BASE, ACTION_REMOVE_TODO_FROM_BASE,
+ACTION_TOGGLE_TODO_TO_BASE } from "../../modules/actions";
 import {
   selectVisibleTodos,
   selectSearchTodo,
@@ -25,6 +26,7 @@ function Todos() {
   const actionInitTodos = () => dispatch(ACTION_INIT_TODOS_FROM_BASE());
   const actionRemoveTodoFromBase = (key) =>
     dispatch(ACTION_REMOVE_TODO_FROM_BASE(key));
+  const actionToggleTodoToBase = (key) => dispatch(ACTION_TOGGLE_TODO_TO_BASE(key));
 
   useEffect(() => {
     actionInitTodos();
@@ -32,6 +34,7 @@ function Todos() {
 
   const handleClick = (element) => {
     actionToggleTodo(element);
+    actionToggleTodoToBase(element)
   };
 
   const handleRemove = (element) => {
@@ -42,20 +45,19 @@ function Todos() {
   const renderTodos = (todoList) =>
     todoList.map((todo) => (
       <Segment
-        key={todo.id}
-        onClick={() => handleClick(todo.key)}
+        key={todo.key}    
         className="todos__segment"
       >
         {todo.completed ? (
-          <Icon name="check circle outline" size="large" color="pink"></Icon>
+          <Button circular icon="check circle outline" size="large" color="pink" onClick={() => handleClick(todo)}></Button>
         ) : (
-          <Icon name="circle outline" size="large" color="violet"></Icon>
+          <Button circular icon="circle outline" size="large" color="violet" onClick={() => handleClick(todo)}></Button>
         )}
         {todo.title}
         <Button
           icon="trash"
           color="grey"
-          onClick={() => handleRemove(todo.key)}
+          onClick={() => handleRemove(todo)}
         ></Button>
       </Segment>
     ));
@@ -71,14 +73,17 @@ function Todos() {
         <Message negative header='Błąd pobierania danych!'/>
       )}
 
-      {todosLoading && (
+      {todosLoading 
+      && 
+      (
         <Segment>
           <Dimmer active inverted>
             <Loader inverted content="Ładowanie..." />
           </Dimmer>
           <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
         </Segment>
-      )}
+      )
+      }
     </div>
   );
 }
