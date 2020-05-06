@@ -15,6 +15,7 @@ export const TODOS_ACTION_TYPES = {
   REMOVE_TODO_FROM_BASE: "REMOVE_TODO_FROM_BASE",
   GET_DATA_LOADING: "GET_DATA_LOADING",
   GET_DATA_ERROR: "GET_DATA_ERROR",
+  TOGGLE_TODO_TO_BASE: "TOGGLE_TODO_TO_BASE"
 };
 
 const API_URL = "https://jfdd14-ks-homework7.firebaseio.com/";
@@ -26,27 +27,25 @@ export const filters = [
   TODOS_ACTION_TYPES.SHOW_DONE,
 ];
 
-let nextToDoId = 0;
-
 export const ACTION_ADD_TODO = (inputValue) => {
   return {
     type: TODOS_ACTION_TYPES.ADD_TODO,
     value: inputValue,
-    id: nextToDoId++,
+    id: Date.now(),
   };
 };
 
-export const ACTION_TOGGLE_TODO = (key) => {
+export const ACTION_TOGGLE_TODO = (todo) => {
   return {
     type: TODOS_ACTION_TYPES.TOGGLE_TODO,
-    key: key,
+    todo: todo,
   };
 };
 
-export const ACTION_REMOVE_TODO = (key) => {
+export const ACTION_REMOVE_TODO = (todo) => {
   return {
     type: TODOS_ACTION_TYPES.REMOVE_TODO,
-    key: key,
+    todo: todo,
   };
 };
 
@@ -73,7 +72,7 @@ export const ACTION_INIT_TODOS_SUCCESS = (todos) => {
 
 export const ACTION_INIT_TODOS_FROM_BASE = () => {
   return (dispatch) => {
-    dispatch(ACTION_GET_DATA_LOADING());
+    // dispatch(ACTION_GET_DATA_LOADING());
     return fetch(API_URL + jsonType)
       .then((response) => response.json())
       .then((json) => {
@@ -93,15 +92,18 @@ export const ACTION_ADD_TODO_TO_BASE = (inputValue) => {
     fetch(API_URL + jsonType, {
       method: "POST",
       body: JSON.stringify(body),
-    });
+    })
+    .then(() => dispatch(ACTION_INIT_TODOS_FROM_BASE()))
+    .then(() => ACTION_ADD_TODO(inputValue))
   };
 };
 
-export const ACTION_REMOVE_TODO_FROM_BASE = (key) => {
+export const ACTION_REMOVE_TODO_FROM_BASE = (todo) => {
   return (dispatch) => {
-    fetch(API_URL + key + jsonType, {
+    fetch(API_URL + todo.key + jsonType, {
       method: "DELETE",
-    });
+    })
+    .then(() => dispatch(ACTION_INIT_TODOS_FROM_BASE()))
   };
 };
 
@@ -114,5 +116,18 @@ export const ACTION_GET_DATA_LOADING = () => {
 export const ACTION_GET_DATA_ERROR = () => {
   return {
     type: TODOS_ACTION_TYPES.GET_DATA_ERROR,
+  };
+};
+
+export const ACTION_TOGGLE_TODO_TO_BASE = (todo) => {
+  return (dispatch) => {
+    const body = {
+      completed: todo.completed,
+    };
+    fetch(API_URL + todo.key + jsonType, {
+      method: "PATCH",
+      body: JSON.stringify(body),
+    })
+    .then(() => dispatch(ACTION_INIT_TODOS_FROM_BASE()))
   };
 };
