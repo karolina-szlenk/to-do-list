@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Input } from "semantic-ui-react";
-import { ACTION_ADD_TODO, ACTION_ADD_TODO_TO_BASE } from "../../modules/actions";
+import { ACTION_ADD_TODO_TO_BASE } from "../../modules/actions";
 import "./AddTodo.css";
 
 function AddTodo() {
@@ -13,14 +13,12 @@ function AddTodo() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    actionAddTodo(inputValue);
     actionAddTodoToBase(inputValue);
     setInputValue("");
   };
 
   const dispatch = useDispatch();
 
-  const actionAddTodo = (todo) => dispatch(ACTION_ADD_TODO(todo));
   const actionAddTodoToBase = (todo) => dispatch(ACTION_ADD_TODO_TO_BASE(todo))
 
   return (
