@@ -7,6 +7,8 @@
 ## General info
 This project is simple todo list using database.
 
+![Todo list](https://i.postimg.cc/PxLJ520f/Screenshot-from-2020-05-07-11-27-30.png)
+
 ## Features
 User of app can:
 * add task
