@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Segment, Button, Icon, Message, Dimmer, Loader, Image } from "semantic-ui-react";
+import { Segment, Button, Message, Dimmer, Loader, Image } from "semantic-ui-react";
 import { ACTION_TOGGLE_TODO, ACTION_REMOVE_TODO, ACTION_INIT_TODOS_FROM_BASE, ACTION_REMOVE_TODO_FROM_BASE,
 ACTION_TOGGLE_TODO_TO_BASE } from "../../modules/actions";
 import {
@@ -66,11 +66,12 @@ function Todos() {
     <div>
       <h2 className="header__app subtitle">MY TASKS</h2>
       {!todosError && !todosLoading && searchTodo
-        ? renderTodos(searchTodoByName)
+        ? (searchTodoByName.length > 0 ? renderTodos(searchTodoByName) : <Message negative header='No search results found!'/>)
         : renderTodos(todosVisible)}
 
       {todosError && (
-        <Message negative header='Błąd pobierania danych!'/>
+        <Message negative header='
+        data download error!'/>
       )}
 
       {todosLoading 
@@ -78,7 +79,7 @@ function Todos() {
       (
         <Segment>
           <Dimmer active inverted>
-            <Loader inverted content="Ładowanie..." />
+            <Loader inverted content="Loading..." />
           </Dimmer>
           <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
         </Segment>
@@ -86,6 +87,8 @@ function Todos() {
       }
     </div>
   );
+
+  
 }
 
 export default Todos;
